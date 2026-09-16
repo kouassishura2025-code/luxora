@@ -1,0 +1,39 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/firebase_options.dart"
+    - "lib/l10n/generated/**"
+  errors:
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    avoid_print: true
+    require_trailing_commas: true
+
+    always_declare_return_types: true
+    avoid_empty_else: true
+    avoid_relative_lib_imports: true
+    avoid_types_as_parameter_names: true
+    cancel_subscriptions: true
+    close_sinks: true
+    no_duplicate_case_values: true
+    throw_in_finally: true
+    unnecessary_statements: true
+
+    directives_ordering: false
+    prefer_final_locals: true
+    prefer_final_in_for_each: true
+    sort_child_properties_last: true
+    use_super_parameters: true
+
+    prefer_const_constructors: false
+    prefer_const_literals_to_create_immutables: false
+    prefer_const_declarations: false
+    unnecessary_const: false
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
