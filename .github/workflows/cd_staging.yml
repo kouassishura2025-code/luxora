@@ -27,6 +27,7 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
+      - run: flutter gen-l10n
       - run: flutter analyze --no-fatal-infos
       - run: flutter test --reporter expanded
         continue-on-error: true
@@ -48,22 +49,29 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - name: Restore google-services.json
+      - name: Generate l10n
+        run: flutter gen-l10n
+      - name: Stub google-services.json
         run: |
-          if [ -n "${{ secrets.ANDROID_GOOGLE_SERVICES_JSON_B64 }}" ]; then
-            echo "${{ secrets.ANDROID_GOOGLE_SERVICES_JSON_B64 }}" | base64 -d > android/app/google-services.json
+          if [ ! -f android/app/google-services.json ]; then
+            echo '{"project_info":{"project_number":"0","project_id":"ci-stub","storage_bucket":"ci-stub.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:0:android:0","android_client_info":{"package_name":"com.luxora.luxora"}},"oauth_client":[],"api_key":[{"current_key":"stub"}],"services":{"appinvite_service":{"other_platform_oauth_client":[]}}}],"configuration_version":"1"}' > android/app/google-services.json
           fi
-      - name: Restore firebase_options.dart
+      - name: Stub firebase_options.dart
         run: |
-          if [ -n "${{ secrets.FIREBASE_OPTIONS_B64 }}" ]; then
-            echo "${{ secrets.FIREBASE_OPTIONS_B64 }}" | base64 -d > lib/firebase_options.dart
+          if [ ! -f lib/firebase_options.dart ]; then
+            echo "// CI stub" > lib/firebase_options.dart
+            echo "// ignore_for_file: type=lint" >> lib/firebase_options.dart
+            echo "import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;" >> lib/firebase_options.dart
+            echo "class DefaultFirebaseOptions { static FirebaseOptions get currentPlatform => throw UnimplementedError(); }" >> lib/firebase_options.dart
           fi
-      - run: |
+      - name: Build APK (release)
+        run: |
           flutter build apk \
             --release \
             -t lib/main_dev.dart \
             --build-number=${{ github.run_number }}
-      - run: |
+      - name: Rename APK
+        run: |
           mv build/app/outputs/flutter-apk/app-release.apk \
              build/app/outputs/flutter-apk/luxora-staging-${{ github.run_number }}.apk
       - uses: actions/upload-artifact@v4
