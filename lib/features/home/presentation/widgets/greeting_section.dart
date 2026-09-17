@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 
-/// Salutation personnalisée.
 class GreetingSection extends StatelessWidget {
   const GreetingSection({
     super.key,
@@ -18,15 +17,9 @@ class GreetingSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          greeting,
-          style: LuxoraTextStyles.bodyMedium,
-        ),
+        Text(greeting, style: LuxoraTextStyles.bodyMedium),
         const SizedBox(height: 6),
-        Text(
-          name,
-          style: LuxoraTextStyles.titleLarge,
-        ),
+        Text(name, style: LuxoraTextStyles.titleLarge),
       ],
     );
   }

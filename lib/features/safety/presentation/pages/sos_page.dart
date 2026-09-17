@@ -7,6 +7,7 @@ import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../../domain/entities/emergency_contact.dart';
 import '../providers/safety_provider.dart';
 import '../widgets/emergency_contact_tile.dart';
@@ -17,14 +18,15 @@ class SosPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final contactsAsync = ref.watch(emergencyContactsProvider);
     final sosState = ref.watch(sosProvider);
 
     return LuxoraScaffold(
       applyPadding: false,
-      appBar: const LuxoraAppBar(
-        overline: 'Sécurité',
-        title: 'Assistance',
+      appBar: LuxoraAppBar(
+        overline: l10n.safetyOverline,
+        title: l10n.safetyTitle,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -33,27 +35,24 @@ class SosPage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 16),
-
             Text(
-              'En cas d\'urgence.',
+              l10n.safetyHeadline,
               style: LuxoraTextStyles.displayMedium.copyWith(fontSize: 28),
             ),
             const SizedBox(height: 12),
             Text(
-              'Maintenez le bouton pendant 3 secondes pour déclencher '
-              'une alerte silencieuse à vos contacts.',
+              l10n.safetySubtitle,
               style: LuxoraTextStyles.bodyMedium,
             ),
 
             const SizedBox(height: LuxoraSpacing.xxxl),
 
-            // ─── Bouton SOS ─────────────────────────────
             Center(
               child: SosButton(
                 onTriggered: () async {
                   await ref.read(sosProvider.notifier).trigger();
                   if (context.mounted) {
-                    _showTriggeredDialog(context, ref);
+                    _showTriggeredDialog(context, ref, l10n);
                   }
                 },
               ),
@@ -64,8 +63,8 @@ class SosPage extends ConsumerWidget {
             Center(
               child: Text(
                 sosState.status == SosStatus.triggered
-                    ? 'Alerte envoyée.'
-                    : 'Maintenez 3 secondes',
+                    ? l10n.safetyAlertSent
+                    : l10n.safetyHold,
                 style: LuxoraTextStyles.bodyMedium.copyWith(
                   color: sosState.status == SosStatus.triggered
                       ? LuxoraColors.success
@@ -76,9 +75,8 @@ class SosPage extends ConsumerWidget {
 
             const SizedBox(height: LuxoraSpacing.xxxl),
 
-            // ─── Contacts ───────────────────────────────
             Text(
-              'CONTACTS D\'URGENCE',
+              l10n.safetyContacts.toUpperCase(),
               style: LuxoraTextStyles.overline.copyWith(
                 fontSize: 10,
                 color: LuxoraColors.textSecondary,
@@ -113,19 +111,8 @@ class SosPage extends ConsumerWidget {
                 ),
               ),
               error: (_, __) => Text(
-                'Erreur de chargement',
+                l10n.commonError,
                 style: LuxoraTextStyles.bodyMedium,
-              ),
-            ),
-
-            const SizedBox(height: LuxoraSpacing.lg),
-
-            Center(
-              child: Text(
-                'Ajouter un contact',
-                style: LuxoraTextStyles.labelMedium.copyWith(
-                  color: LuxoraColors.champagne,
-                ),
               ),
             ),
 
@@ -136,7 +123,11 @@ class SosPage extends ConsumerWidget {
     );
   }
 
-  void _showTriggeredDialog(BuildContext context, WidgetRef ref) {
+  void _showTriggeredDialog(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -174,15 +165,8 @@ class SosPage extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Alerte envoyée.',
+                l10n.safetyAlertSent,
                 style: LuxoraTextStyles.titleLarge,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Vos contacts d\'urgence ont reçu votre position '
-                'et un message d\'alerte.',
-                style: LuxoraTextStyles.bodyMedium,
-                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 28),
               SizedBox(
@@ -193,7 +177,7 @@ class SosPage extends ConsumerWidget {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Fermer',
+                    l10n.commonClose,
                     style: LuxoraTextStyles.labelLarge.copyWith(
                       color: LuxoraColors.champagne,
                     ),

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../foundations/colors/luxora_colors.dart';
+import '../../foundations/motion/luxora_durations.dart';
+import '../../foundations/motion/luxora_haptics.dart';
 import '../../foundations/spacing/luxora_radii.dart';
 import '../../foundations/typography/luxora_text_styles.dart';
 
 /// Bouton fantôme LUXORA — contour or, fond transparent.
-///
-/// Pour les actions secondaires qui méritent un peu plus de présence
-/// qu'un simple lien texte.
-class LuxoraGhostButton extends StatelessWidget {
+class LuxoraGhostButton extends StatefulWidget {
   const LuxoraGhostButton({
     super.key,
     required this.label,
@@ -23,39 +22,90 @@ class LuxoraGhostButton extends StatelessWidget {
   final bool expanded;
 
   @override
+  State<LuxoraGhostButton> createState() => _LuxoraGhostButtonState();
+}
+
+class _LuxoraGhostButtonState extends State<LuxoraGhostButton> {
+  bool _pressed = false;
+
+  bool get _isEnabled => widget.onPressed != null;
+
+  void _onTapDown(_) {
+    if (!_isEnabled) return;
+    setState(() => _pressed = true);
+  }
+
+  void _onTapUp(_) {
+    if (!_isEnabled) return;
+    setState(() => _pressed = false);
+    LuxoraHaptics.light();
+    widget.onPressed?.call();
+  }
+
+  void _onTapCancel() {
+    if (!_isEnabled) return;
+    setState(() => _pressed = false);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final button = OutlinedButton(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        minimumSize: const Size.fromHeight(56),
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        side: BorderSide(
-          color: onPressed != null
-              ? LuxoraColors.champagne.withOpacity(0.5)
+    final content = AnimatedContainer(
+      duration: LuxoraDurations.instant,
+      height: 56,
+      decoration: BoxDecoration(
+        color: _pressed
+            ? LuxoraColors.champagne.withOpacity(0.08)
+            : Colors.transparent,
+        borderRadius: LuxoraRadii.brMd,
+        border: Border.all(
+          color: _isEnabled
+              ? LuxoraColors.champagne.withOpacity(_pressed ? 0.8 : 0.5)
               : LuxoraColors.divider,
           width: 1,
         ),
-        shape: const RoundedRectangleBorder(borderRadius: LuxoraRadii.brMd),
-        foregroundColor: LuxoraColors.champagne,
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, size: 18, color: LuxoraColors.champagne),
-            const SizedBox(width: 10),
-          ],
-          Text(
-            label,
-            style: LuxoraTextStyles.buttonLabel.copyWith(
-              color: LuxoraColors.champagne,
+      child: Center(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.icon != null) ...[
+              Icon(
+                widget.icon,
+                size: 18,
+                color: _isEnabled
+                    ? LuxoraColors.champagne
+                    : LuxoraColors.textDisabled,
+              ),
+              const SizedBox(width: 10),
+            ],
+            Text(
+              widget.label,
+              style: LuxoraTextStyles.buttonLabel.copyWith(
+                color: _isEnabled
+                    ? LuxoraColors.champagne
+                    : LuxoraColors.textDisabled,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 
-    return expanded ? SizedBox(width: double.infinity, child: button) : button;
+    final button = GestureDetector(
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      onTapCancel: _onTapCancel,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedScale(
+        scale: _pressed ? 0.98 : 1.0,
+        duration: LuxoraDurations.instant,
+        curve: Curves.easeOut,
+        child: content,
+      ),
+    );
+
+    return widget.expanded
+        ? SizedBox(width: double.infinity, child: button)
+        : button;
   }
 }

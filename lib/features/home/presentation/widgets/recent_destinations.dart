@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../design_system/components/animations/luxora_list_animation.dart';
 import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/spacing/luxora_radii.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
@@ -33,9 +34,12 @@ class RecentDestinations extends StatelessWidget {
     return Column(
       children: [
         for (var i = 0; i < destinations.length; i++) ...[
-          _DestinationTile(
-            destination: destinations[i],
-            onTap: () => onTap(destinations[i]),
+          LuxoraListAnimation(
+            index: i,
+            child: _DestinationTile(
+              destination: destinations[i],
+              onTap: () => onTap(destinations[i]),
+            ),
           ),
           if (i != destinations.length - 1) const SizedBox(height: 10),
         ],
@@ -44,7 +48,7 @@ class RecentDestinations extends StatelessWidget {
   }
 }
 
-class _DestinationTile extends StatelessWidget {
+class _DestinationTile extends StatefulWidget {
   const _DestinationTile({
     required this.destination,
     required this.onTap,
@@ -54,13 +58,25 @@ class _DestinationTile extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<_DestinationTile> createState() => _DestinationTileState();
+}
+
+class _DestinationTileState extends State<_DestinationTile> {
+  bool _pressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: LuxoraRadii.brMd,
-        splashColor: LuxoraColors.champagne.withOpacity(0.08),
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _pressed = true),
+      onTapUp: (_) {
+        setState(() => _pressed = false);
+        widget.onTap();
+      },
+      onTapCancel: () => setState(() => _pressed = false),
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedScale(
+        scale: _pressed ? 0.98 : 1.0,
+        duration: const Duration(milliseconds: 120),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
@@ -69,7 +85,6 @@ class _DestinationTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // ─── Icône ──────────────────────────────────
               Container(
                 width: 40,
                 height: 40,
@@ -78,28 +93,26 @@ class _DestinationTile extends StatelessWidget {
                   borderRadius: LuxoraRadii.brSm,
                 ),
                 child: Icon(
-                  destination.icon,
+                  widget.destination.icon,
                   size: 18,
                   color: LuxoraColors.champagne,
                 ),
               ),
-
               const SizedBox(width: 14),
-
-              // ─── Infos ──────────────────────────────────
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      destination.label,
+                      widget.destination.label,
                       style: LuxoraTextStyles.labelLarge.copyWith(
                         fontSize: 14,
                       ),
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      '${destination.relativeTime} · ${destination.priceLabel}',
+                      '${widget.destination.relativeTime} · '
+                      '${widget.destination.priceLabel}',
                       style: LuxoraTextStyles.bodySmall.copyWith(
                         fontSize: 12,
                       ),
@@ -107,9 +120,7 @@ class _DestinationTile extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // ─── Flèche ─────────────────────────────────
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 12,
                 color: LuxoraColors.textTertiary,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../design_system/components/feedback/luxora_empty_state.dart';
+import '../../../../design_system/components/feedback/luxora_skeleton.dart';
 import '../../../../design_system/components/feedback/luxora_toast.dart';
 import '../../../../design_system/components/navigation/luxora_app_bar.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
@@ -17,6 +18,28 @@ class FavoriteDriversPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(favoriteDriversProvider);
     final drivers = state.drivers;
+
+    if (drivers.isEmpty && state.removingIds.isEmpty) {
+      return LuxoraScaffold(
+        applyPadding: false,
+        appBar: const LuxoraAppBar(
+          overline: 'Préférences',
+          title: 'Chauffeurs favoris',
+        ),
+        body: const Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 16),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: LuxoraSkeletonHero(height: 120),
+            ),
+            SizedBox(height: 20),
+            LuxoraSkeletonList(count: 3),
+          ],
+        ),
+      );
+    }
 
     return LuxoraScaffold(
       applyPadding: false,
@@ -47,8 +70,8 @@ class FavoriteDriversPage extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    '${drivers.length} chauffeur${drivers.length > 1 ? 's' : ''} '
-                    'dans votre cercle privé.',
+                    '${drivers.length} chauffeur'
+                    '${drivers.length > 1 ? 's' : ''} dans votre cercle privé.',
                     style: LuxoraTextStyles.bodyMedium,
                   ),
 

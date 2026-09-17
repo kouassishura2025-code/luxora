@@ -9,6 +9,7 @@ import '../../../../design_system/components/navigation/luxora_app_bar.dart';
 import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../providers/auth_provider.dart';
 
 class OtpVerificationPage extends ConsumerWidget {
@@ -16,29 +17,29 @@ class OtpVerificationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final flowState = ref.watch(otpFlowProvider);
     final phone = flowState.phoneNumber ?? '';
 
     return LuxoraScaffold(
-      appBar: const LuxoraAppBar(
-        overline: 'Vérification',
-        title: 'Code de sécurité',
+      appBar: LuxoraAppBar(
+        overline: l10n.otpOverline,
+        title: l10n.otpTitle,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 24),
 
-          Text('Saisissez le code.', style: LuxoraTextStyles.displayMedium),
+          Text(l10n.otpHeadline, style: LuxoraTextStyles.displayMedium),
           const SizedBox(height: 12),
           Text(
-            'Un code à 6 chiffres a été envoyé au $phone.',
+            l10n.otpSubtitle(phone),
             style: LuxoraTextStyles.bodyMedium,
           ),
 
           const SizedBox(height: 32),
 
-          // ─── Indice mode démo ────────────────────────────
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
@@ -51,7 +52,7 @@ class OtpVerificationPage extends ConsumerWidget {
             ),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.info_outline_rounded,
                   size: 18,
                   color: LuxoraColors.champagne,
@@ -59,7 +60,7 @@ class OtpVerificationPage extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Mode démo · Utilisez le code 123456',
+                    l10n.otpDemo,
                     style: LuxoraTextStyles.bodySmall.copyWith(
                       color: LuxoraColors.champagne,
                       fontSize: 12,
@@ -95,7 +96,7 @@ class OtpVerificationPage extends ConsumerWidget {
 
           Center(
             child: LuxoraTextButton(
-              label: 'Renvoyer le code',
+              label: l10n.otpResend,
               onPressed: flowState.isLoading
                   ? null
                   : () {

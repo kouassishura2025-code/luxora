@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../foundations/colors/luxora_colors.dart';
+import '../../foundations/motion/luxora_haptics.dart';
 import '../../foundations/spacing/luxora_radii.dart';
 import '../../foundations/typography/luxora_text_styles.dart';
 
+/// Champ OTP LUXORA — 6 cases dorées.
 class LuxoraCodeField extends StatefulWidget {
   const LuxoraCodeField({
     super.key,
@@ -26,6 +28,7 @@ class LuxoraCodeField extends StatefulWidget {
 class _LuxoraCodeFieldState extends State<LuxoraCodeField> {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
+  int _lastLength = 0;
 
   @override
   void initState() {
@@ -58,9 +61,16 @@ class _LuxoraCodeFieldState extends State<LuxoraCodeField> {
               LengthLimitingTextInputFormatter(widget.length),
             ],
             onChanged: (value) {
+              // Haptic à chaque nouveau chiffre saisi.
+              if (value.length > _lastLength) {
+                LuxoraHaptics.selection();
+              }
+              _lastLength = value.length;
+
               widget.onChanged?.call(value);
               setState(() {});
               if (value.length == widget.length) {
+                LuxoraHaptics.medium();
                 widget.onCompleted(value);
               }
             },

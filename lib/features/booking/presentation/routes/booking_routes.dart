@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/page_transitions.dart';
 import '../../../../app/router/route_names.dart';
 import '../pages/bookings_history_page.dart';
 import '../pages/chauffeur_preference_page.dart';
@@ -8,9 +9,7 @@ import '../pages/ride_confirmation_page.dart';
 import '../pages/ride_tracking_page.dart';
 import '../pages/vehicle_selection_page.dart';
 
-/// Routes du flux de réservation.
 abstract final class BookingRoutes {
-  /// Onglet "Réservations" du shell (branche 1).
   static List<RouteBase> get shellRoutes => [
         GoRoute(
           path: RouteNames.bookingsHistory,
@@ -19,32 +18,46 @@ abstract final class BookingRoutes {
         ),
       ];
 
-  /// Flux de réservation (hors shell, plein écran).
   static List<RouteBase> get flowRoutes => [
         GoRoute(
           path: RouteNames.destinationEntry,
           name: 'destinationEntry',
-          builder: (context, state) => const DestinationEntryPage(),
+          pageBuilder: (context, state) => LuxoraPageTransitions.fadeThrough(
+            key: state.pageKey,
+            child: const DestinationEntryPage(),
+          ),
         ),
         GoRoute(
           path: RouteNames.vehicleSelection,
           name: 'vehicleSelection',
-          builder: (context, state) => const VehicleSelectionPage(),
+          pageBuilder: (context, state) => LuxoraPageTransitions.slideRight(
+            key: state.pageKey,
+            child: const VehicleSelectionPage(),
+          ),
         ),
         GoRoute(
           path: RouteNames.chauffeurPreferences,
           name: 'chauffeurPreferences',
-          builder: (context, state) => const ChauffeurPreferencePage(),
+          pageBuilder: (context, state) => LuxoraPageTransitions.slideRight(
+            key: state.pageKey,
+            child: const ChauffeurPreferencePage(),
+          ),
         ),
         GoRoute(
           path: RouteNames.rideConfirmation,
           name: 'rideConfirmation',
-          builder: (context, state) => const RideConfirmationPage(),
+          pageBuilder: (context, state) => LuxoraPageTransitions.slideRight(
+            key: state.pageKey,
+            child: const RideConfirmationPage(),
+          ),
         ),
         GoRoute(
           path: RouteNames.rideTracking,
           name: 'rideTracking',
-          builder: (context, state) => const RideTrackingPage(),
+          pageBuilder: (context, state) => LuxoraPageTransitions.fadeThrough(
+            key: state.pageKey,
+            child: const RideTrackingPage(),
+          ),
         ),
       ];
 }

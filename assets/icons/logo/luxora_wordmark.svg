@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 100" width="500" height="100">
+  <!-- Barre verticale gauche -->
+  <line x1="40" y1="30" x2="40" y2="70" stroke="#C9A24B" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Wordmark LUXORA -->
+  <text x="250" y="62" 
+        font-family="Playfair Display, Georgia, serif" 
+        font-size="46" 
+        font-weight="600" 
+        letter-spacing="12" 
+        text-anchor="middle" 
+        fill="#F6F3EC">LUXORA</text>
+  
+  <!-- Trait or sous le texte -->
+  <line x1="150" y1="82" x2="350" y2="82" stroke="#C9A24B" stroke-width="0.6" opacity="0.5"/>
+  
+  <!-- Barre verticale droite -->
+  <line x1="460" y1="30" x2="460" y2="70" stroke="#C9A24B" stroke-width="1" opacity="0.6"/>
+</svg>

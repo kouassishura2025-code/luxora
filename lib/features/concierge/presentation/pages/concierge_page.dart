@@ -8,17 +8,20 @@ import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 class ConciergePage extends StatelessWidget {
   const ConciergePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return LuxoraScaffold(
       applyPadding: false,
-      appBar: const LuxoraAppBar(
-        overline: '24h/24',
-        title: 'Concierge',
+      appBar: LuxoraAppBar(
+        overline: l10n.conciergeOverline,
+        title: l10n.conciergeTitle,
         showBackButton: false,
       ),
       body: SingleChildScrollView(
@@ -29,18 +32,17 @@ class ConciergePage extends StatelessWidget {
           children: [
             const SizedBox(height: 24),
             Text(
-              'À votre service.',
+              l10n.conciergeAtService,
               style: LuxoraTextStyles.displayMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              'Un concierge dédié, joignable à toute heure.',
+              l10n.conciergeSubtitle,
               style: LuxoraTextStyles.bodyMedium,
             ),
 
             const SizedBox(height: LuxoraSpacing.xxxl),
 
-            // ─── Carte principale ──────────────────────
             LuxoraCard(
               goldBorder: true,
               onTap: () => context.go(RouteNames.conciergeChat),
@@ -59,7 +61,7 @@ class ConciergePage extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        'EN LIGNE',
+                        l10n.conciergeOnline.toUpperCase(),
                         style: LuxoraTextStyles.overline.copyWith(
                           fontSize: 10,
                         ),
@@ -68,12 +70,12 @@ class ConciergePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Démarrer une\nconversation.',
+                    l10n.conciergeStartChat,
                     style: LuxoraTextStyles.titleLarge,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Réponse en moins de 2 minutes.',
+                    l10n.conciergeResponse,
                     style: LuxoraTextStyles.bodyMedium,
                   ),
                 ],
@@ -82,7 +84,6 @@ class ConciergePage extends StatelessWidget {
 
             const SizedBox(height: LuxoraSpacing.lg),
 
-            // ─── Services rapides ─────────────────────
             Text(
               'SERVICES',
               style: LuxoraTextStyles.overline.copyWith(

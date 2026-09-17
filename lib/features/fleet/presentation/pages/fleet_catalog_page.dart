@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/route_names.dart';
+import '../../../../design_system/components/animations/luxora_list_animation.dart';
 import '../../../../design_system/components/navigation/luxora_app_bar.dart';
 import '../../../../design_system/components/surfaces/luxora_card.dart';
 import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../providers/fleet_provider.dart';
 import '../widgets/fleet_hero_card.dart';
 import '../widgets/fleet_list_tile.dart';
@@ -18,13 +20,14 @@ class FleetCatalogPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final vehicles = ref.watch(fleetVehiclesProvider);
 
     return LuxoraScaffold(
       applyPadding: false,
-      appBar: const LuxoraAppBar(
-        overline: 'Notre collection',
-        title: 'Flotte',
+      appBar: LuxoraAppBar(
+        overline: l10n.fleetOverline,
+        title: l10n.fleetTitle,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -34,45 +37,58 @@ class FleetCatalogPage extends ConsumerWidget {
           children: [
             const SizedBox(height: 16),
 
-            Text(
-              'Une flotte\nd\'exception.',
-              style: LuxoraTextStyles.displayMedium.copyWith(fontSize: 28),
+            LuxoraListAnimation(
+              index: 0,
+              child: Text(
+                l10n.fleetHeadline,
+                style: LuxoraTextStyles.displayMedium.copyWith(fontSize: 28),
+              ),
             ),
             const SizedBox(height: 12),
-            Text(
-              'Quatre classes de véhicules, chacune pensée '
-              'pour un moment de vie.',
-              style: LuxoraTextStyles.bodyMedium,
+
+            LuxoraListAnimation(
+              index: 1,
+              child: Text(
+                l10n.fleetSubtitle,
+                style: LuxoraTextStyles.bodyMedium,
+              ),
             ),
 
             const SizedBox(height: LuxoraSpacing.xxxl),
 
-            // ─── Carte héro du premier ────────────────
             if (vehicles.isNotEmpty)
-              FleetHeroCard(
-                vehicle: vehicles.first,
-                onTap: () => context.go(
-                  RouteNames.vehicleDetail(vehicles.first.id),
+              LuxoraListAnimation(
+                index: 2,
+                child: FleetHeroCard(
+                  vehicle: vehicles.first,
+                  onTap: () => context.go(
+                    RouteNames.vehicleDetail(vehicles.first.id),
+                  ),
                 ),
               ),
 
             const SizedBox(height: LuxoraSpacing.lg),
 
-            // ─── Autres véhicules ─────────────────────
-            Text(
-              'TOUTE LA FLOTTE',
-              style: LuxoraTextStyles.overline.copyWith(
-                fontSize: 10,
-                color: LuxoraColors.textSecondary,
+            LuxoraListAnimation(
+              index: 3,
+              child: Text(
+                l10n.fleetAllVehicles.toUpperCase(),
+                style: LuxoraTextStyles.overline.copyWith(
+                  fontSize: 10,
+                  color: LuxoraColors.textSecondary,
+                ),
               ),
             ),
             const SizedBox(height: 16),
 
             for (var i = 1; i < vehicles.length; i++) ...[
-              FleetListTile(
-                vehicle: vehicles[i],
-                onTap: () => context.go(
-                  RouteNames.vehicleDetail(vehicles[i].id),
+              LuxoraListAnimation(
+                index: 3 + i,
+                child: FleetListTile(
+                  vehicle: vehicles[i],
+                  onTap: () => context.go(
+                    RouteNames.vehicleDetail(vehicles[i].id),
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -80,40 +96,45 @@ class FleetCatalogPage extends ConsumerWidget {
 
             const SizedBox(height: LuxoraSpacing.xxxl),
 
-            // ─── Engagements ──────────────────────────
-            Text(
-              'NOS ENGAGEMENTS',
-              style: LuxoraTextStyles.overline.copyWith(
-                fontSize: 10,
-                color: LuxoraColors.textSecondary,
+            LuxoraListAnimation(
+              index: 3 + vehicles.length,
+              child: Text(
+                l10n.fleetCommitments.toUpperCase(),
+                style: LuxoraTextStyles.overline.copyWith(
+                  fontSize: 10,
+                  color: LuxoraColors.textSecondary,
+                ),
               ),
             ),
             const SizedBox(height: 16),
 
-            LuxoraCard(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: const [
-                  _EngagementRow(
-                    icon: Icons.verified_user_outlined,
-                    text: 'Chauffeurs formés à l\'excellence',
-                  ),
-                  Divider(color: LuxoraColors.divider, height: 24),
-                  _EngagementRow(
-                    icon: Icons.directions_car_outlined,
-                    text: 'Véhicules de moins de 3 ans',
-                  ),
-                  Divider(color: LuxoraColors.divider, height: 24),
-                  _EngagementRow(
-                    icon: Icons.shield_outlined,
-                    text: 'Assurance premium tous risques',
-                  ),
-                  Divider(color: LuxoraColors.divider, height: 24),
-                  _EngagementRow(
-                    icon: Icons.eco_outlined,
-                    text: 'Flotte hybride et électrique',
-                  ),
-                ],
+            LuxoraListAnimation(
+              index: 4 + vehicles.length,
+              child: LuxoraCard(
+                padding: const EdgeInsets.all(20),
+                child: const Column(
+                  children: [
+                    _EngagementRow(
+                      icon: Icons.verified_user_outlined,
+                      text: 'Chauffeurs formés à l\'excellence',
+                    ),
+                    Divider(color: LuxoraColors.divider, height: 24),
+                    _EngagementRow(
+                      icon: Icons.directions_car_outlined,
+                      text: 'Véhicules de moins de 3 ans',
+                    ),
+                    Divider(color: LuxoraColors.divider, height: 24),
+                    _EngagementRow(
+                      icon: Icons.shield_outlined,
+                      text: 'Assurance premium tous risques',
+                    ),
+                    Divider(color: LuxoraColors.divider, height: 24),
+                    _EngagementRow(
+                      icon: Icons.eco_outlined,
+                      text: 'Flotte hybride et électrique',
+                    ),
+                  ],
+                ),
               ),
             ),
 

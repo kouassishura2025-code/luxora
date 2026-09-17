@@ -11,6 +11,7 @@ import '../../../../design_system/foundations/spacing/luxora_radii.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../providers/home_provider.dart';
 import '../providers/map_provider.dart';
 import '../widgets/booking_hero_card.dart';
@@ -25,7 +26,8 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final greeting = ref.watch(greetingProvider);
+    final l10n = AppLocalizations.of(context);
+    final greetingKey = ref.watch(greetingKeyProvider);
     final userName = ref.watch(userNameProvider);
     final initials = ref.watch(userInitialsProvider);
     final recent = ref.watch(recentDestinationsProvider);
@@ -47,29 +49,31 @@ class HomePage extends ConsumerWidget {
             surfaceTintColor: Colors.transparent,
             toolbarHeight: 64,
             titleSpacing: 24,
-            title: GreetingHeader(city: 'Paris', initials: initials),
+            title: GreetingHeader(initials: initials),
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 const SizedBox(height: 20),
-                GreetingSection(greeting: greeting, name: userName),
+                GreetingSection(
+                  greeting: resolveGreeting(l10n, greetingKey),
+                  name: userName,
+                ),
                 const SizedBox(height: 32),
 
                 BookingHeroCard(
-                  overline: 'Réservation',
-                  title: 'Où allons-nous ?',
-                  subtitle:
-                      'Réservez votre chauffeur privé en quelques secondes.',
-                  ctaLabel: 'Réserver maintenant',
+                  overline: l10n.homeBookingOverline,
+                  title: l10n.homeBookingTitle,
+                  subtitle: l10n.homeBookingSubtitle,
+                  ctaLabel: l10n.homeBookingCta,
                   onTap: () => context.go(RouteNames.destinationEntry),
                 ),
 
                 const SizedBox(height: LuxoraSpacing.sectionGap),
 
-                // ─── Autour de vous (carte) ──────────────
-                _SectionTitle(label: 'Autour de vous'),
+                // ─── Carte ─────────────────────────────
+                _SectionTitle(label: l10n.homeSectionAround),
                 const SizedBox(height: 16),
                 ClipRRect(
                   borderRadius: LuxoraRadii.brLg,
@@ -101,7 +105,6 @@ class HomePage extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        // Overlay : lieu actuel
                         Positioned(
                           left: 16,
                           bottom: 16,
@@ -148,27 +151,28 @@ class HomePage extends ConsumerWidget {
 
                 const SizedBox(height: LuxoraSpacing.sectionGap),
 
-                _SectionTitle(label: 'Services'),
+                // ─── Services ──────────────────────────
+                _SectionTitle(label: l10n.homeSectionServices),
                 const SizedBox(height: 16),
                 ServiceShortcuts(
                   shortcuts: [
                     ServiceShortcut(
-                      label: 'Concierge',
+                      label: l10n.serviceConcierge,
                       icon: Icons.support_agent_outlined,
-                      onTap: () {},
+                      onTap: () => context.go(RouteNames.conciergeChat),
                     ),
                     ServiceShortcut(
-                      label: 'Flotte',
+                      label: l10n.serviceFleet,
                       icon: Icons.directions_car_filled_outlined,
                       onTap: () => context.go(RouteNames.fleetCatalog),
                     ),
                     ServiceShortcut(
-                      label: 'Favoris',
+                      label: l10n.serviceFavorites,
                       icon: Icons.star_outline_rounded,
-                      onTap: () {},
+                      onTap: () => context.go(RouteNames.favoriteDrivers),
                     ),
                     ServiceShortcut(
-                      label: 'Sécurité',
+                      label: l10n.serviceSafety,
                       icon: Icons.shield_outlined,
                       onTap: () => context.go(RouteNames.sos),
                     ),
@@ -178,15 +182,15 @@ class HomePage extends ConsumerWidget {
                 const SizedBox(height: LuxoraSpacing.sectionGap),
 
                 ConciergeBanner(
-                  message: 'Un concierge est disponible 24h/24.',
-                  onTap: () {},
+                  message: l10n.homeConciergeAvailable,
+                  onTap: () => context.go(RouteNames.conciergeChat),
                 ),
 
                 const SizedBox(height: LuxoraSpacing.sectionGap),
 
                 _SectionTitle(
-                  label: 'Récents',
-                  action: 'Voir tout',
+                  label: l10n.homeSectionRecent,
+                  action: l10n.homeSeeAll,
                   onAction: () {},
                 ),
                 const SizedBox(height: 16),
@@ -196,7 +200,7 @@ class HomePage extends ConsumerWidget {
 
                 Center(
                   child: Text(
-                    'LUXORA — Paris · 2026',
+                    l10n.homeFooter,
                     style: LuxoraTextStyles.caption.copyWith(
                       fontSize: 10,
                       color: LuxoraColors.textTertiary,

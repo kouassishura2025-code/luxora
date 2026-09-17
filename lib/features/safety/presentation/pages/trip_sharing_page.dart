@@ -11,6 +11,7 @@ import '../../../../design_system/foundations/spacing/luxora_radii.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../../domain/entities/emergency_contact.dart';
 import '../providers/safety_provider.dart';
 import '../widgets/contact_checkbox_tile.dart';
@@ -20,14 +21,15 @@ class TripSharingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final contactsAsync = ref.watch(emergencyContactsProvider);
     final sharingState = ref.watch(tripSharingProvider);
 
     return LuxoraScaffold(
       applyPadding: false,
-      appBar: const LuxoraAppBar(
-        overline: 'Sécurité',
-        title: 'Partage de trajet',
+      appBar: LuxoraAppBar(
+        overline: l10n.safetyOverline,
+        title: l10n.safetyTripSharing,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -36,21 +38,18 @@ class TripSharingPage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 16),
-
             Text(
               'Partagez\nvotre trajet.',
               style: LuxoraTextStyles.displayMedium.copyWith(fontSize: 28),
             ),
             const SizedBox(height: 12),
             Text(
-              'Vos proches pourront suivre votre position en temps réel '
-              'jusqu\'à votre arrivée.',
+              'Vos proches pourront suivre votre position en temps réel.',
               style: LuxoraTextStyles.bodyMedium,
             ),
 
             const SizedBox(height: LuxoraSpacing.xl),
 
-            // ─── Destinataires ──────────────────────────
             Text(
               'DESTINATAIRES',
               style: LuxoraTextStyles.overline.copyWith(
@@ -93,15 +92,11 @@ class TripSharingPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              error: (_, __) => Text(
-                'Erreur',
-                style: LuxoraTextStyles.bodyMedium,
-              ),
+              error: (_, __) => Text(l10n.commonError),
             ),
 
             const SizedBox(height: LuxoraSpacing.xl),
 
-            // ─── Durée ──────────────────────────────────
             Text(
               'DURÉE DU PARTAGE',
               style: LuxoraTextStyles.overline.copyWith(
@@ -131,7 +126,6 @@ class TripSharingPage extends ConsumerWidget {
 
             const SizedBox(height: LuxoraSpacing.xl),
 
-            // ─── Lien généré ────────────────────────────
             if (sharingState.link != null) ...[
               Text(
                 'LIEN SÉCURISÉ',
@@ -176,7 +170,6 @@ class TripSharingPage extends ConsumerWidget {
                           );
                         }
                       },
-                      tooltip: 'Copier',
                     ),
                   ],
                 ),
@@ -185,9 +178,6 @@ class TripSharingPage extends ConsumerWidget {
               const SizedBox(height: LuxoraSpacing.lg),
             ],
 
-            const SizedBox(height: LuxoraSpacing.lg),
-
-            // ─── CTA ────────────────────────────────────
             LuxoraPrimaryButton(
               label: sharingState.link == null
                   ? 'Générer le lien'

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foundations/colors/luxora_colors.dart';
+import '../../foundations/motion/luxora_haptics.dart';
 import '../../foundations/spacing/luxora_radii.dart';
 import '../../foundations/typography/luxora_text_styles.dart';
 import '../buttons/luxora_ghost_button.dart';
@@ -52,14 +53,20 @@ abstract final class LuxoraDialog {
                   Expanded(
                     child: LuxoraGhostButton(
                       label: cancelLabel,
-                      onPressed: () => Navigator.of(context).pop(false),
+                      onPressed: () {
+                        LuxoraHaptics.light();
+                        Navigator.of(context).pop(false);
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: LuxoraPrimaryButton(
                       label: confirmLabel,
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () {
+                        LuxoraHaptics.heavy();
+                        Navigator.of(context).pop(true);
+                      },
                     ),
                   ),
                 ],

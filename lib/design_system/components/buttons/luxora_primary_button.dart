@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import '../../foundations/colors/luxora_colors.dart';
 import '../../foundations/colors/luxora_gradients.dart';
 import '../../foundations/motion/luxora_durations.dart';
+import '../../foundations/motion/luxora_haptics.dart';
 import '../../foundations/spacing/luxora_radii.dart';
 import '../../foundations/typography/luxora_text_styles.dart';
 
 /// Bouton principal LUXORA — or champagne, signature de l'app.
 ///
-/// Règle : un seul bouton principal par écran.
-/// Pour une action secondaire, utiliser `LuxoraGhostButton`.
+/// ## Micro-interactions
+/// - Scale 0.98 au tap
+/// - Halo doré subtil au tap
+/// - Haptic feedback (mobile uniquement)
 class LuxoraPrimaryButton extends StatefulWidget {
   const LuxoraPrimaryButton({
     super.key,
@@ -24,8 +27,6 @@ class LuxoraPrimaryButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final bool isLoading;
   final IconData? icon;
-
-  /// Si `true`, le bouton prend toute la largeur.
   final bool expanded;
 
   @override
@@ -35,19 +36,44 @@ class LuxoraPrimaryButton extends StatefulWidget {
 class _LuxoraPrimaryButtonState extends State<LuxoraPrimaryButton> {
   bool _pressed = false;
 
+  bool get _isEnabled => widget.onPressed != null && !widget.isLoading;
+
+  void _onTapDown(_) {
+    if (!_isEnabled) return;
+    setState(() => _pressed = true);
+  }
+
+  void _onTapUp(_) {
+    if (!_isEnabled) return;
+    setState(() => _pressed = false);
+    LuxoraHaptics.medium();
+    widget.onPressed?.call();
+  }
+
+  void _onTapCancel() {
+    if (!_isEnabled) return;
+    setState(() => _pressed = false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isEnabled = widget.onPressed != null && !widget.isLoading;
-
     final content = AnimatedContainer(
       duration: LuxoraDurations.instant,
       height: 56,
       padding: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
-        gradient: isEnabled ? LuxoraGradients.champagne : null,
-        color: isEnabled ? null : LuxoraColors.slate,
+        gradient: _isEnabled ? LuxoraGradients.champagne : null,
+        color: _isEnabled ? null : LuxoraColors.slate,
         borderRadius: LuxoraRadii.brMd,
-        boxShadow: _pressed ? null : null,
+        boxShadow: _pressed && _isEnabled
+            ? [
+                BoxShadow(
+                  color: LuxoraColors.champagne.withOpacity(0.35),
+                  blurRadius: 24,
+                  spreadRadius: -2,
+                ),
+              ]
+            : null,
       ),
       child: Center(
         child: widget.isLoading
@@ -66,7 +92,7 @@ class _LuxoraPrimaryButtonState extends State<LuxoraPrimaryButton> {
                     Icon(
                       widget.icon,
                       size: 20,
-                      color: isEnabled
+                      color: _isEnabled
                           ? LuxoraColors.obsidian
                           : LuxoraColors.textDisabled,
                     ),
@@ -75,7 +101,7 @@ class _LuxoraPrimaryButtonState extends State<LuxoraPrimaryButton> {
                   Text(
                     widget.label,
                     style: LuxoraTextStyles.buttonLabel.copyWith(
-                      color: isEnabled
+                      color: _isEnabled
                           ? LuxoraColors.obsidian
                           : LuxoraColors.textDisabled,
                     ),
@@ -86,17 +112,20 @@ class _LuxoraPrimaryButtonState extends State<LuxoraPrimaryButton> {
     );
 
     final button = GestureDetector(
-      onTapDown: isEnabled ? (_) => setState(() => _pressed = true) : null,
-      onTapUp: isEnabled ? (_) => setState(() => _pressed = false) : null,
-      onTapCancel: isEnabled ? () => setState(() => _pressed = false) : null,
-      onTap: isEnabled ? widget.onPressed : null,
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      onTapCancel: _onTapCancel,
+      behavior: HitTestBehavior.opaque,
       child: AnimatedScale(
         scale: _pressed ? 0.98 : 1.0,
         duration: LuxoraDurations.instant,
+        curve: Curves.easeOut,
         child: content,
       ),
     );
 
-    return widget.expanded ? SizedBox(width: double.infinity, child: button) : button;
+    return widget.expanded
+        ? SizedBox(width: double.infinity, child: button)
+        : button;
   }
 }

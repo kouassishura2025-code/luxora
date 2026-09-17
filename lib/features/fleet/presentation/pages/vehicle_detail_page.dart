@@ -10,6 +10,7 @@ import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../providers/fleet_provider.dart';
 import '../widgets/vehicle_amenity_chip.dart';
 import '../widgets/vehicle_spec_row.dart';
@@ -21,6 +22,7 @@ class VehicleDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final vehicle = ref.watch(fleetVehicleByIdProvider(vehicleId));
 
     if (vehicle == null) {
@@ -49,7 +51,7 @@ class VehicleDetailPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // ─── Bannière héro ──────────────────
+                  // ─── Bannière ──────────────────────────
                   Container(
                     height: 260,
                     decoration: BoxDecoration(
@@ -74,15 +76,10 @@ class VehicleDetailPage extends ConsumerWidget {
                           left: 24,
                           bottom: 24,
                           right: 24,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                vehicle.tagline,
-                                style: LuxoraTextStyles.displayMedium
-                                    .copyWith(fontSize: 24),
-                              ),
-                            ],
+                          child: Text(
+                            vehicle.tagline,
+                            style: LuxoraTextStyles.displayMedium
+                                .copyWith(fontSize: 24),
                           ),
                         ),
                       ],
@@ -96,7 +93,6 @@ class VehicleDetailPage extends ConsumerWidget {
                       children: [
                         const SizedBox(height: LuxoraSpacing.xl),
 
-                        // ─── Description ─────────────
                         Text(
                           vehicle.description,
                           style: LuxoraTextStyles.bodyLarge.copyWith(
@@ -107,7 +103,6 @@ class VehicleDetailPage extends ConsumerWidget {
 
                         const SizedBox(height: LuxoraSpacing.xl),
 
-                        // ─── Spécifications ──────────
                         Text(
                           'CARACTÉRISTIQUES',
                           style: LuxoraTextStyles.overline.copyWith(
@@ -163,7 +158,6 @@ class VehicleDetailPage extends ConsumerWidget {
 
                         const SizedBox(height: LuxoraSpacing.xl),
 
-                        // ─── Équipements ─────────────
                         Text(
                           'À BORD',
                           style: LuxoraTextStyles.overline.copyWith(
@@ -190,7 +184,7 @@ class VehicleDetailPage extends ConsumerWidget {
             ),
           ),
 
-          // ─── CTA fixe en bas ──────────────────────────
+          // ─── CTA ──────────────────────────────────
           Container(
             padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
             decoration: const BoxDecoration(
@@ -205,7 +199,7 @@ class VehicleDetailPage extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: 16),
                 child: LuxoraPrimaryButton(
                   label:
-                      'Réserver · à partir de ${vehicle.basePrice.toStringAsFixed(0)} €',
+                      '${l10n.fleetBook} · à partir de ${vehicle.basePrice.toStringAsFixed(0)} €',
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () => context.go(RouteNames.destinationEntry),
                 ),

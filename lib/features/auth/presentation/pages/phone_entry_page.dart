@@ -10,6 +10,7 @@ import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../providers/auth_provider.dart';
 
 class PhoneEntryPage extends ConsumerStatefulWidget {
@@ -53,12 +54,13 @@ class _PhoneEntryPageState extends ConsumerState<PhoneEntryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final flowState = ref.watch(otpFlowProvider);
 
     return LuxoraScaffold(
-      appBar: const LuxoraAppBar(
-        overline: 'Identification',
-        title: 'Votre numéro',
+      appBar: LuxoraAppBar(
+        overline: l10n.loginOverline,
+        title: l10n.loginTitle,
       ),
       body: Form(
         key: _formKey,
@@ -66,18 +68,17 @@ class _PhoneEntryPageState extends ConsumerState<PhoneEntryPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 24),
-            Text('Bienvenue.', style: LuxoraTextStyles.displayMedium),
+            Text(l10n.loginWelcome, style: LuxoraTextStyles.displayMedium),
             const SizedBox(height: 12),
             Text(
-              'Indiquez votre numéro de téléphone. '
-              'Nous vous enverrons un code de vérification.',
+              l10n.loginSubtitle,
               style: LuxoraTextStyles.bodyMedium,
             ),
             const SizedBox(height: LuxoraSpacing.xxxl),
             LuxoraTextField(
               controller: _controller,
-              label: 'Numéro de téléphone',
-              hint: '+225 XX XX XX XX XX',
+              label: l10n.loginPhoneLabel,
+              hint: l10n.loginPhoneHint,
               prefixIcon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
               textInputAction: TextInputAction.done,
@@ -94,7 +95,7 @@ class _PhoneEntryPageState extends ConsumerState<PhoneEntryPage> {
             ),
             const Spacer(),
             LuxoraPrimaryButton(
-              label: 'Recevoir mon code',
+              label: l10n.loginCta,
               icon: Icons.arrow_forward_rounded,
               isLoading: flowState.isLoading,
               onPressed: _sendOtp,
@@ -102,7 +103,7 @@ class _PhoneEntryPageState extends ConsumerState<PhoneEntryPage> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'En continuant, vous acceptez nos conditions générales.',
+                l10n.loginLegal,
                 style: LuxoraTextStyles.caption.copyWith(
                   fontSize: 10,
                   color: LuxoraColors.textTertiary,

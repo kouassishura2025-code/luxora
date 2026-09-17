@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Données locales de la Home (mock, en attendant Firestore).
+import '../../../../l10n/generated/app_localizations.dart';
+
+/// Données locales de la Home (mock).
 class RecentDestination {
   const RecentDestination({
     required this.label,
@@ -18,19 +20,33 @@ class RecentDestination {
   final IconData icon;
 }
 
-/// Salutation basée sur l'heure de la journée.
-final greetingProvider = Provider<String>((ref) {
+/// Clé de salutation basée sur l'heure.
+enum GreetingKey { morning, afternoon, evening }
+
+final greetingKeyProvider = Provider<GreetingKey>((ref) {
   final hour = DateTime.now().hour;
-  if (hour < 6) return 'Bonsoir,';
-  if (hour < 12) return 'Bonjour,';
-  if (hour < 18) return 'Bon après-midi,';
-  return 'Bonsoir,';
+  if (hour < 6) return GreetingKey.evening;
+  if (hour < 12) return GreetingKey.morning;
+  if (hour < 18) return GreetingKey.afternoon;
+  return GreetingKey.evening;
 });
 
-/// Nom court de l'utilisateur (mock, en attendant Firebase Auth).
+/// Helper pour résoudre la clé en texte localisé.
+String resolveGreeting(AppLocalizations l10n, GreetingKey key) {
+  switch (key) {
+    case GreetingKey.morning:
+      return l10n.homeGreetingMorning;
+    case GreetingKey.afternoon:
+      return l10n.homeGreetingAfternoon;
+    case GreetingKey.evening:
+      return l10n.homeGreetingEvening;
+  }
+}
+
+/// Nom de l'utilisateur (mock).
 final userNameProvider = Provider<String>((ref) => 'M. Kouassi');
 
-/// Initiales pour l'avatar.
+/// Initiales.
 final userInitialsProvider = Provider<String>((ref) {
   final name = ref.watch(userNameProvider);
   final parts = name

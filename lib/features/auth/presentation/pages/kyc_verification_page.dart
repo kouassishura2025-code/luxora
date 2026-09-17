@@ -7,6 +7,7 @@ import '../../../../design_system/foundations/colors/luxora_colors.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../../domain/entities/kyc_document.dart';
 import '../providers/kyc_provider.dart';
 import '../widgets/kyc_document_slot.dart';
@@ -18,37 +19,32 @@ class KycVerificationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final kyc = ref.watch(kycProvider);
 
-    // ─── Vue "en attente" après soumission ────────────
     if (kyc.status == KycStatus.pendingReview) {
       return KycPendingView(
         onReset: () => ref.read(kycProvider.notifier).reset(),
       );
     }
 
-    // ─── Vue "saisie" ─────────────────────────────────
     return LuxoraScaffold(
-      appBar: const LuxoraAppBar(
-        overline: 'Vérification',
+      appBar: LuxoraAppBar(
+        overline: l10n.otpOverline,
         title: 'Identité',
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 8),
-
           KycProgressBar(progress: kyc.progress),
-
           const SizedBox(height: 32),
 
           Text(
             'Vérifions\nvotre identité.',
             style: LuxoraTextStyles.displayMedium.copyWith(fontSize: 28),
           ),
-
           const SizedBox(height: 12),
-
           Text(
             'Fournissez les documents suivants pour activer votre compte '
             'et accéder à tous les services LUXORA.',
@@ -63,7 +59,6 @@ class KycVerificationPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // ─── Documents requis ──────────────────
                   Text(
                     'REQUIS',
                     style: LuxoraTextStyles.overline.copyWith(
@@ -87,9 +82,7 @@ class KycVerificationPage extends ConsumerWidget {
                         .read(kycProvider.notifier)
                         .removeDocument(KycDocumentType.idCard),
                   ),
-
                   const SizedBox(height: 10),
-
                   KycDocumentSlot(
                     type: KycDocumentType.selfie,
                     icon: Icons.face_outlined,
@@ -107,7 +100,6 @@ class KycVerificationPage extends ConsumerWidget {
 
                   const SizedBox(height: LuxoraSpacing.lg),
 
-                  // ─── Documents optionnels ──────────────
                   Text(
                     'OPTIONNELS',
                     style: LuxoraTextStyles.overline.copyWith(
@@ -133,9 +125,7 @@ class KycVerificationPage extends ConsumerWidget {
                         .read(kycProvider.notifier)
                         .removeDocument(KycDocumentType.passport),
                   ),
-
                   const SizedBox(height: 10),
-
                   KycDocumentSlot(
                     type: KycDocumentType.driverLicense,
                     icon: Icons.drive_eta_outlined,
@@ -155,7 +145,6 @@ class KycVerificationPage extends ConsumerWidget {
 
                   const SizedBox(height: LuxoraSpacing.lg),
 
-                  // ─── Note légale ───────────────────────
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(

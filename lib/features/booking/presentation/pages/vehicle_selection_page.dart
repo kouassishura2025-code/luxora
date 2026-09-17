@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/route_names.dart';
+import '../../../../design_system/components/animations/luxora_list_animation.dart';
 import '../../../../design_system/components/buttons/luxora_primary_button.dart';
 import '../../../../design_system/components/navigation/luxora_app_bar.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../providers/booking_provider.dart';
 import '../widgets/booking_progress.dart';
 import '../widgets/vehicle_showcase_card.dart';
@@ -17,13 +19,14 @@ class VehicleSelectionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final vehicles = ref.watch(vehicleClassesProvider);
     final bookingState = ref.watch(bookingProvider);
 
     return LuxoraScaffold(
-      appBar: const LuxoraAppBar(
-        overline: 'Réservation',
-        title: 'Votre véhicule',
+      appBar: LuxoraAppBar(
+        overline: l10n.homeBookingOverline,
+        title: l10n.bookingVehicle,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,7 +42,6 @@ class VehicleSelectionPage extends ConsumerWidget {
 
           const SizedBox(height: LuxoraSpacing.xl),
 
-          // ─── Liste des véhicules ────────────────────────
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
@@ -50,13 +52,18 @@ class VehicleSelectionPage extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final vehicle = vehicles[index];
                 final selected = bookingState.selectedVehicleId == vehicle.id;
-                return VehicleShowcaseCard(
-                  vehicle: vehicle,
-                  selected: selected,
-                  estimateLabel: '${vehicle.basePrice.toStringAsFixed(0)} €',
-                  onTap: () => ref
-                      .read(bookingProvider.notifier)
-                      .selectVehicle(vehicle.id),
+
+                return LuxoraListAnimation(
+                  index: index,
+                  child: VehicleShowcaseCard(
+                    vehicle: vehicle,
+                    selected: selected,
+                    estimateLabel:
+                        '${vehicle.basePrice.toStringAsFixed(0)} €',
+                    onTap: () => ref
+                        .read(bookingProvider.notifier)
+                        .selectVehicle(vehicle.id),
+                  ),
                 );
               },
             ),
@@ -64,9 +71,8 @@ class VehicleSelectionPage extends ConsumerWidget {
 
           const SizedBox(height: LuxoraSpacing.lg),
 
-          // ─── CTA ────────────────────────────────────────
           LuxoraPrimaryButton(
-            label: 'Continuer',
+            label: l10n.bookingContinue,
             icon: Icons.arrow_forward_rounded,
             onPressed: bookingState.selectedVehicleId == null
                 ? null

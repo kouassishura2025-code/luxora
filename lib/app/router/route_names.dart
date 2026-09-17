@@ -31,6 +31,7 @@ class RouteNames {
   static const String notificationSettings = '/profile/notifications';
   static const String paymentMethods = '/profile/payment-methods';
   static const String invoiceHistory = '/profile/invoices';
+  static const String languageSettings = '/profile/language';
 
   // ─── Fleet ─────────────────────────────────────────────
   static const String fleetCatalog = '/fleet';

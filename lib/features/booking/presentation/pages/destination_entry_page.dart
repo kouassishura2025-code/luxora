@@ -12,6 +12,7 @@ import '../../../../design_system/foundations/spacing/luxora_radii.dart';
 import '../../../../design_system/foundations/spacing/luxora_spacing.dart';
 import '../../../../design_system/foundations/typography/luxora_text_styles.dart';
 import '../../../../design_system/layouts/luxora_scaffold.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../providers/booking_provider.dart';
 import '../widgets/booking_progress.dart';
 
@@ -55,8 +56,7 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
       return;
     }
     setState(() => _isSearching = true);
-    final results =
-        await ref.read(_geocodingServiceProvider).search(query);
+    final results = await ref.read(_geocodingServiceProvider).search(query);
     if (!mounted) return;
     setState(() {
       _suggestions = results;
@@ -79,10 +79,12 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return LuxoraScaffold(
-      appBar: const LuxoraAppBar(
-        overline: 'Réservation',
-        title: 'Destination',
+      appBar: LuxoraAppBar(
+        overline: l10n.homeBookingOverline,
+        title: l10n.bookingDestination,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,11 +93,13 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
           const BookingProgress(currentStep: 1),
           const SizedBox(height: 40),
 
-          Text('Où allons-nous ?',
-              style: LuxoraTextStyles.displayMedium,),
+          Text(
+            l10n.homeBookingTitle,
+            style: LuxoraTextStyles.displayMedium,
+          ),
           const SizedBox(height: 8),
           Text(
-            'Indiquez votre point de départ et votre destination.',
+            l10n.loginSubtitle,
             style: LuxoraTextStyles.bodyMedium,
           ),
 
@@ -113,7 +117,7 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
 
           LuxoraTextField(
             controller: _destinationCtrl,
-            label: 'Destination',
+            label: l10n.bookingDestination,
             hint: 'Adresse, lieu, monument…',
             prefixIcon: Icons.location_on_outlined,
             textInputAction: TextInputAction.done,
@@ -123,7 +127,6 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
 
           const SizedBox(height: 16),
 
-          // ─── Suggestions ──────────────────────────────
           Expanded(
             child: _isSearching
                 ? const Center(
@@ -185,7 +188,7 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
           const SizedBox(height: LuxoraSpacing.md),
 
           LuxoraPrimaryButton(
-            label: 'Continuer',
+            label: l10n.bookingContinue,
             icon: Icons.arrow_forward_rounded,
             onPressed:
                 _destinationCtrl.text.trim().isEmpty ? null : _continue,
