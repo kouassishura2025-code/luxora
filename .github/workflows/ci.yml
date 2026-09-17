@@ -30,6 +30,7 @@ jobs:
       - run: flutter pub get
       - run: dart format --output=none --set-exit-if-changed lib test
         continue-on-error: true
+      - run: flutter gen-l10n
       - run: flutter analyze --no-fatal-infos
 
   test:
