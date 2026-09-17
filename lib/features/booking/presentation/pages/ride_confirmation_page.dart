@@ -32,6 +32,7 @@ class RideConfirmationPage extends ConsumerWidget {
 
     return LuxoraScaffold(
       appBar: const LuxoraAppBar(
+        forceBackButton: true,
         overline: 'Réservation',
         title: 'Confirmation',
       ),
@@ -178,7 +179,7 @@ class RideConfirmationPage extends ConsumerWidget {
           LuxoraPrimaryButton(
             label: 'Confirmer la réservation',
             icon: Icons.check_rounded,
-            onPressed: () => context.go(RouteNames.rideTracking),
+            onPressed: () => context.push(RouteNames.rideTracking),
           ),
 
           const SizedBox(height: LuxoraSpacing.lg),

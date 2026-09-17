@@ -74,7 +74,7 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
     final notifier = ref.read(bookingProvider.notifier);
     notifier.setPickup(_pickupCtrl.text.trim());
     notifier.setDestination(_destinationCtrl.text.trim());
-    context.go(RouteNames.vehicleSelection);
+    context.push(RouteNames.vehicleSelection);
   }
 
   @override
@@ -83,6 +83,7 @@ class _DestinationEntryPageState extends ConsumerState<DestinationEntryPage> {
 
     return LuxoraScaffold(
       appBar: LuxoraAppBar(
+        forceBackButton: true,
         overline: l10n.homeBookingOverline,
         title: l10n.bookingDestination,
       ),

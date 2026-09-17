@@ -43,7 +43,7 @@ class WelcomePage extends StatelessWidget {
 
           LuxoraPrimaryButton(
             label: l10n.welcomeStart,
-            onPressed: () => context.go(RouteNames.onboarding),
+            onPressed: () => context.push(RouteNames.onboarding),
           ),
 
           const SizedBox(height: 32),

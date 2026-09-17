@@ -67,7 +67,7 @@ class HomePage extends ConsumerWidget {
                   title: l10n.homeBookingTitle,
                   subtitle: l10n.homeBookingSubtitle,
                   ctaLabel: l10n.homeBookingCta,
-                  onTap: () => context.go(RouteNames.destinationEntry),
+                  onTap: () => context.push(RouteNames.destinationEntry),
                 ),
 
                 const SizedBox(height: LuxoraSpacing.sectionGap),
@@ -159,22 +159,22 @@ class HomePage extends ConsumerWidget {
                     ServiceShortcut(
                       label: l10n.serviceConcierge,
                       icon: Icons.support_agent_outlined,
-                      onTap: () => context.go(RouteNames.conciergeChat),
+                      onTap: () => context.push(RouteNames.conciergeChat),
                     ),
                     ServiceShortcut(
                       label: l10n.serviceFleet,
                       icon: Icons.directions_car_filled_outlined,
-                      onTap: () => context.go(RouteNames.fleetCatalog),
+                      onTap: () => context.push(RouteNames.fleetCatalog),
                     ),
                     ServiceShortcut(
                       label: l10n.serviceFavorites,
                       icon: Icons.star_outline_rounded,
-                      onTap: () => context.go(RouteNames.favoriteDrivers),
+                      onTap: () => context.push(RouteNames.favoriteDrivers),
                     ),
                     ServiceShortcut(
                       label: l10n.serviceSafety,
                       icon: Icons.shield_outlined,
-                      onTap: () => context.go(RouteNames.sos),
+                      onTap: () => context.push(RouteNames.sos),
                     ),
                   ],
                 ),
@@ -183,7 +183,7 @@ class HomePage extends ConsumerWidget {
 
                 ConciergeBanner(
                   message: l10n.homeConciergeAvailable,
-                  onTap: () => context.go(RouteNames.conciergeChat),
+                  onTap: () => context.push(RouteNames.conciergeChat),
                 ),
 
                 const SizedBox(height: LuxoraSpacing.sectionGap),

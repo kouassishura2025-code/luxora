@@ -38,6 +38,7 @@ class RideTrackingPage extends ConsumerWidget {
     return LuxoraScaffold(
       applyPadding: false,
       appBar: const LuxoraAppBar(
+        forceBackButton: true,
         overline: 'En cours',
         title: 'Votre chauffeur',
       ),

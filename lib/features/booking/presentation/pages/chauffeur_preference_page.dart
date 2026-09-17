@@ -23,6 +23,7 @@ class ChauffeurPreferencePage extends ConsumerWidget {
 
     return LuxoraScaffold(
       appBar: const LuxoraAppBar(
+        forceBackButton: true,
         overline: 'Réservation',
         title: 'Préférences',
       ),
@@ -78,7 +79,7 @@ class ChauffeurPreferencePage extends ConsumerWidget {
                 ref.read(bookingProvider.notifier).setDestination(
                       bookingState.destination ?? '',
                     );
-                context.go(RouteNames.rideConfirmation);
+                context.push(RouteNames.rideConfirmation);
               },
             ),
           ),
@@ -89,7 +90,7 @@ class ChauffeurPreferencePage extends ConsumerWidget {
           LuxoraPrimaryButton(
             label: 'Continuer',
             icon: Icons.arrow_forward_rounded,
-            onPressed: () => context.go(RouteNames.rideConfirmation),
+            onPressed: () => context.push(RouteNames.rideConfirmation),
           ),
 
           const SizedBox(height: LuxoraSpacing.lg),

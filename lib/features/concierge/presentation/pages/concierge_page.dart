@@ -45,7 +45,7 @@ class ConciergePage extends StatelessWidget {
 
             LuxoraCard(
               goldBorder: true,
-              onTap: () => context.go(RouteNames.conciergeChat),
+              onTap: () => context.push(RouteNames.conciergeChat),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -97,28 +97,28 @@ class ConciergePage extends StatelessWidget {
               icon: Icons.restaurant_outlined,
               title: 'Réservation restaurant',
               subtitle: 'Table pour ce soir',
-              onTap: () => context.go(RouteNames.conciergeChat),
+              onTap: () => context.push(RouteNames.conciergeChat),
             ),
             const SizedBox(height: 10),
             _ConciergeService(
               icon: Icons.local_florist_outlined,
               title: 'Fleurs & attentions',
               subtitle: 'Livraison personnalisée',
-              onTap: () => context.go(RouteNames.conciergeChat),
+              onTap: () => context.push(RouteNames.conciergeChat),
             ),
             const SizedBox(height: 10),
             _ConciergeService(
               icon: Icons.theater_comedy_outlined,
               title: 'Billets & événements',
               subtitle: 'Accès privilégié',
-              onTap: () => context.go(RouteNames.conciergeChat),
+              onTap: () => context.push(RouteNames.conciergeChat),
             ),
             const SizedBox(height: 10),
             _ConciergeService(
               icon: Icons.hotel_outlined,
               title: 'Réservation hôtel',
               subtitle: 'Suites et palaces',
-              onTap: () => context.go(RouteNames.conciergeChat),
+              onTap: () => context.push(RouteNames.conciergeChat),
             ),
 
             const SizedBox(height: LuxoraSpacing.xxxl),

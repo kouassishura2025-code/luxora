@@ -41,7 +41,7 @@ class _PhoneEntryPageState extends ConsumerState<PhoneEntryPage> {
     if (!mounted) return;
 
     if (ok) {
-      context.go(RouteNames.otpVerification);
+      context.push(RouteNames.otpVerification);
     } else {
       final error = ref.read(otpFlowProvider).error;
       if (error != null) {
@@ -64,55 +64,73 @@ class _PhoneEntryPageState extends ConsumerState<PhoneEntryPage> {
       ),
       body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            Text(l10n.loginWelcome, style: LuxoraTextStyles.displayMedium),
-            const SizedBox(height: 12),
-            Text(
-              l10n.loginSubtitle,
-              style: LuxoraTextStyles.bodyMedium,
-            ),
-            const SizedBox(height: LuxoraSpacing.xxxl),
-            LuxoraTextField(
-              controller: _controller,
-              label: l10n.loginPhoneLabel,
-              hint: l10n.loginPhoneHint,
-              prefixIcon: Icons.phone_outlined,
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (_) => _sendOtp(),
-              validator: (value) {
-                final v = value?.trim() ?? '';
-                if (v.isEmpty) return 'Numéro requis';
-                if (v.length < 8) return 'Numéro trop court';
-                if (!v.startsWith('+')) {
-                  return 'Format international requis (+225…)';
-                }
-                return null;
-              },
-            ),
-            const Spacer(),
-            LuxoraPrimaryButton(
-              label: l10n.loginCta,
-              icon: Icons.arrow_forward_rounded,
-              isLoading: flowState.isLoading,
-              onPressed: _sendOtp,
-            ),
-            const SizedBox(height: 16),
-            Center(
-              child: Text(
-                l10n.loginLegal,
-                style: LuxoraTextStyles.caption.copyWith(
-                  fontSize: 10,
-                  color: LuxoraColors.textTertiary,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
                 ),
-                textAlign: TextAlign.center,
+                child: IntrinsicHeight(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 24),
+                      Text(
+                        l10n.loginWelcome,
+                        style: LuxoraTextStyles.displayMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        l10n.loginSubtitle,
+                        style: LuxoraTextStyles.bodyMedium,
+                      ),
+                      const SizedBox(height: LuxoraSpacing.xl),
+                      LuxoraTextField(
+                        controller: _controller,
+                        label: l10n.loginPhoneLabel,
+                        hint: l10n.loginPhoneHint,
+                        prefixIcon: Icons.phone_outlined,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _sendOtp(),
+                        validator: (value) {
+                          final v = value?.trim() ?? '';
+                          if (v.isEmpty) return 'Numéro requis';
+                          if (v.length < 8) return 'Numéro trop court';
+                          if (!v.startsWith('+')) {
+                            return 'Format international requis (+225…)';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: LuxoraSpacing.xl),
+                      const Spacer(),
+                      LuxoraPrimaryButton(
+                        label: l10n.loginCta,
+                        icon: Icons.arrow_forward_rounded,
+                        isLoading: flowState.isLoading,
+                        onPressed: _sendOtp,
+                      ),
+                      const SizedBox(height: 16),
+                      Center(
+                        child: Text(
+                          l10n.loginLegal,
+                          style: LuxoraTextStyles.caption.copyWith(
+                            fontSize: 10,
+                            color: LuxoraColors.textTertiary,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(height: LuxoraSpacing.lg),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: LuxoraSpacing.lg),
-          ],
+            );
+          },
         ),
       ),
     );

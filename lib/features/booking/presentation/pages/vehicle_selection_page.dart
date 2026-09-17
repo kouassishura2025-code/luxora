@@ -25,6 +25,7 @@ class VehicleSelectionPage extends ConsumerWidget {
 
     return LuxoraScaffold(
       appBar: LuxoraAppBar(
+        forceBackButton: true,
         overline: l10n.homeBookingOverline,
         title: l10n.bookingVehicle,
       ),
@@ -76,7 +77,7 @@ class VehicleSelectionPage extends ConsumerWidget {
             icon: Icons.arrow_forward_rounded,
             onPressed: bookingState.selectedVehicleId == null
                 ? null
-                : () => context.go(RouteNames.chauffeurPreferences),
+                : () => context.push(RouteNames.chauffeurPreferences),
           ),
 
           const SizedBox(height: LuxoraSpacing.lg),
