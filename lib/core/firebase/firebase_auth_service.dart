@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-/// Wrapper bas niveau autour de FirebaseAuth.
+/// Wrapper Firebase Auth LUXORA.
 class FirebaseAuthService {
   FirebaseAuthService(this._auth);
 
@@ -12,6 +12,12 @@ class FirebaseAuthService {
   User? get currentUser => _auth.currentUser;
   Stream<User?> authStateChanges() => _auth.authStateChanges();
 
+  /// Connexion anonyme (Firestore sans SMS).
+  Future<UserCredential> signInAnonymously() {
+    return _auth.signInAnonymously();
+  }
+
+  /// Envoie un OTP par SMS.
   Future<String> sendOtp({
     required String phoneNumber,
     int? forceResendingToken,
@@ -35,6 +41,7 @@ class FirebaseAuthService {
     return completer.future;
   }
 
+  /// Vérifie un code OTP.
   Future<UserCredential> verifyOtp({
     required String verificationId,
     required String code,
