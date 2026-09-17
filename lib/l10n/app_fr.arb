@@ -21,7 +21,9 @@
   "otpSubtitle": "Un code à 6 chiffres a été envoyé au {phone}.",
   "@otpSubtitle": {
     "placeholders": {
-      "phone": { "type": "String" }
+      "phone": {
+        "type": "String"
+      }
     }
   },
   "otpDemo": "Mode démo · Utilisez le code 123456",
@@ -116,5 +118,36 @@
   "languageTitle": "Langue",
   "languageFrench": "Français",
   "languageEnglish": "English",
-  "languageSystem": "Système"
+  "languageSystem": "Système",
+  "kycTitle": "Identité",
+  "kycHeadline": "Vérifions\nvotre identité.",
+  "kycSubtitle": "Fournissez les documents suivants pour activer votre compte et accéder à tous les services LUXORA.",
+  "kycRequired": "REQUIS",
+  "kycOptional": "OPTIONNELS",
+  "kycIdCard": "Carte d'identité nationale",
+  "kycSelfie": "Selfie de vérification",
+  "kycPassport": "Passeport",
+  "kycDriverLicense": "Permis de conduire",
+  "kycAdd": "Ajouter",
+  "kycDocumentProvided": "Document fourni",
+  "kycDocumentMissing": "À fournir",
+  "kycOptionalLabel": "· optionnel",
+  "kycSubmit": "Soumettre pour vérification",
+  "kycProcessing": "Traitement sous 24h ouvrées.",
+  "kycPrivacy": "Vos documents sont chiffrés et stockés de manière sécurisée. Ils ne sont jamais partagés.",
+  "kycPendingHeadline": "Documents reçus.",
+  "kycPendingMessage": "Notre équipe vérifie vos documents.\nVous serez notifié sous 24h ouvrées.",
+  "kycPendingCta": "Retour au profil",
+  "kycCancelSubmission": "Annuler la soumission",
+  "kycProgress": "AVANCEMENT",
+  "paymentTitle": "Paiement",
+  "paymentHeadline": "Vos moyens\nde paiement.",
+  "paymentPrimary": "CARTE PRINCIPALE",
+  "paymentSecondary": "CARTE SECONDAIRE",
+  "paymentHolder": "TITULAIRE",
+  "paymentExpires": "EXPIRE",
+  "paymentAddCard": "Ajouter une carte",
+  "invoiceTitle": "Factures",
+  "invoiceHeadline": "Historique.",
+  "invoiceSubtitle": "Vos trajets et leurs factures."
 }

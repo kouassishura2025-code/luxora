@@ -343,4 +343,97 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get languageSystem => 'Système';
+
+  @override
+  String get kycTitle => 'Identité';
+
+  @override
+  String get kycHeadline => 'Vérifions\nvotre identité.';
+
+  @override
+  String get kycSubtitle => 'Fournissez les documents suivants pour activer votre compte et accéder à tous les services LUXORA.';
+
+  @override
+  String get kycRequired => 'REQUIS';
+
+  @override
+  String get kycOptional => 'OPTIONNELS';
+
+  @override
+  String get kycIdCard => 'Carte d\'identité nationale';
+
+  @override
+  String get kycSelfie => 'Selfie de vérification';
+
+  @override
+  String get kycPassport => 'Passeport';
+
+  @override
+  String get kycDriverLicense => 'Permis de conduire';
+
+  @override
+  String get kycAdd => 'Ajouter';
+
+  @override
+  String get kycDocumentProvided => 'Document fourni';
+
+  @override
+  String get kycDocumentMissing => 'À fournir';
+
+  @override
+  String get kycOptionalLabel => '· optionnel';
+
+  @override
+  String get kycSubmit => 'Soumettre pour vérification';
+
+  @override
+  String get kycProcessing => 'Traitement sous 24h ouvrées.';
+
+  @override
+  String get kycPrivacy => 'Vos documents sont chiffrés et stockés de manière sécurisée. Ils ne sont jamais partagés.';
+
+  @override
+  String get kycPendingHeadline => 'Documents reçus.';
+
+  @override
+  String get kycPendingMessage => 'Notre équipe vérifie vos documents.\nVous serez notifié sous 24h ouvrées.';
+
+  @override
+  String get kycPendingCta => 'Retour au profil';
+
+  @override
+  String get kycCancelSubmission => 'Annuler la soumission';
+
+  @override
+  String get kycProgress => 'AVANCEMENT';
+
+  @override
+  String get paymentTitle => 'Paiement';
+
+  @override
+  String get paymentHeadline => 'Vos moyens\nde paiement.';
+
+  @override
+  String get paymentPrimary => 'CARTE PRINCIPALE';
+
+  @override
+  String get paymentSecondary => 'CARTE SECONDAIRE';
+
+  @override
+  String get paymentHolder => 'TITULAIRE';
+
+  @override
+  String get paymentExpires => 'EXPIRE';
+
+  @override
+  String get paymentAddCard => 'Ajouter une carte';
+
+  @override
+  String get invoiceTitle => 'Factures';
+
+  @override
+  String get invoiceHeadline => 'Historique.';
+
+  @override
+  String get invoiceSubtitle => 'Vos trajets et leurs factures.';
 }

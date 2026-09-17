@@ -343,4 +343,97 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageSystem => 'System';
+
+  @override
+  String get kycTitle => 'Identity';
+
+  @override
+  String get kycHeadline => 'Let\'s verify\nyour identity.';
+
+  @override
+  String get kycSubtitle => 'Provide the following documents to activate your account and access all LUXORA services.';
+
+  @override
+  String get kycRequired => 'REQUIRED';
+
+  @override
+  String get kycOptional => 'OPTIONAL';
+
+  @override
+  String get kycIdCard => 'National ID card';
+
+  @override
+  String get kycSelfie => 'Verification selfie';
+
+  @override
+  String get kycPassport => 'Passport';
+
+  @override
+  String get kycDriverLicense => 'Driver\'s license';
+
+  @override
+  String get kycAdd => 'Add';
+
+  @override
+  String get kycDocumentProvided => 'Document provided';
+
+  @override
+  String get kycDocumentMissing => 'To provide';
+
+  @override
+  String get kycOptionalLabel => '· optional';
+
+  @override
+  String get kycSubmit => 'Submit for verification';
+
+  @override
+  String get kycProcessing => 'Processing within 24 business hours.';
+
+  @override
+  String get kycPrivacy => 'Your documents are encrypted and stored securely. They are never shared.';
+
+  @override
+  String get kycPendingHeadline => 'Documents received.';
+
+  @override
+  String get kycPendingMessage => 'Our team is reviewing your documents.\nYou\'ll be notified within 24 business hours.';
+
+  @override
+  String get kycPendingCta => 'Back to profile';
+
+  @override
+  String get kycCancelSubmission => 'Cancel submission';
+
+  @override
+  String get kycProgress => 'PROGRESS';
+
+  @override
+  String get paymentTitle => 'Payment';
+
+  @override
+  String get paymentHeadline => 'Your payment\nmethods.';
+
+  @override
+  String get paymentPrimary => 'PRIMARY CARD';
+
+  @override
+  String get paymentSecondary => 'SECONDARY CARD';
+
+  @override
+  String get paymentHolder => 'CARDHOLDER';
+
+  @override
+  String get paymentExpires => 'EXPIRES';
+
+  @override
+  String get paymentAddCard => 'Add a card';
+
+  @override
+  String get invoiceTitle => 'Invoices';
+
+  @override
+  String get invoiceHeadline => 'History.';
+
+  @override
+  String get invoiceSubtitle => 'Your trips and their invoices.';
 }

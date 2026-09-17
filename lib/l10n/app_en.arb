@@ -21,7 +21,9 @@
   "otpSubtitle": "A 6-digit code was sent to {phone}.",
   "@otpSubtitle": {
     "placeholders": {
-      "phone": { "type": "String" }
+      "phone": {
+        "type": "String"
+      }
     }
   },
   "otpDemo": "Demo mode · Use code 123456",
@@ -116,5 +118,36 @@
   "languageTitle": "Language",
   "languageFrench": "Français",
   "languageEnglish": "English",
-  "languageSystem": "System"
+  "languageSystem": "System",
+  "kycTitle": "Identity",
+  "kycHeadline": "Let's verify\nyour identity.",
+  "kycSubtitle": "Provide the following documents to activate your account and access all LUXORA services.",
+  "kycRequired": "REQUIRED",
+  "kycOptional": "OPTIONAL",
+  "kycIdCard": "National ID card",
+  "kycSelfie": "Verification selfie",
+  "kycPassport": "Passport",
+  "kycDriverLicense": "Driver's license",
+  "kycAdd": "Add",
+  "kycDocumentProvided": "Document provided",
+  "kycDocumentMissing": "To provide",
+  "kycOptionalLabel": "· optional",
+  "kycSubmit": "Submit for verification",
+  "kycProcessing": "Processing within 24 business hours.",
+  "kycPrivacy": "Your documents are encrypted and stored securely. They are never shared.",
+  "kycPendingHeadline": "Documents received.",
+  "kycPendingMessage": "Our team is reviewing your documents.\nYou'll be notified within 24 business hours.",
+  "kycPendingCta": "Back to profile",
+  "kycCancelSubmission": "Cancel submission",
+  "kycProgress": "PROGRESS",
+  "paymentTitle": "Payment",
+  "paymentHeadline": "Your payment\nmethods.",
+  "paymentPrimary": "PRIMARY CARD",
+  "paymentSecondary": "SECONDARY CARD",
+  "paymentHolder": "CARDHOLDER",
+  "paymentExpires": "EXPIRES",
+  "paymentAddCard": "Add a card",
+  "invoiceTitle": "Invoices",
+  "invoiceHeadline": "History.",
+  "invoiceSubtitle": "Your trips and their invoices."
 }

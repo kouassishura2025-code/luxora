@@ -766,6 +766,192 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Système'**
   String get languageSystem;
+
+  /// No description provided for @kycTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identité'**
+  String get kycTitle;
+
+  /// No description provided for @kycHeadline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifions\nvotre identité.'**
+  String get kycHeadline;
+
+  /// No description provided for @kycSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fournissez les documents suivants pour activer votre compte et accéder à tous les services LUXORA.'**
+  String get kycSubtitle;
+
+  /// No description provided for @kycRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'REQUIS'**
+  String get kycRequired;
+
+  /// No description provided for @kycOptional.
+  ///
+  /// In fr, this message translates to:
+  /// **'OPTIONNELS'**
+  String get kycOptional;
+
+  /// No description provided for @kycIdCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte d\'identité nationale'**
+  String get kycIdCard;
+
+  /// No description provided for @kycSelfie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Selfie de vérification'**
+  String get kycSelfie;
+
+  /// No description provided for @kycPassport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passeport'**
+  String get kycPassport;
+
+  /// No description provided for @kycDriverLicense.
+  ///
+  /// In fr, this message translates to:
+  /// **'Permis de conduire'**
+  String get kycDriverLicense;
+
+  /// No description provided for @kycAdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter'**
+  String get kycAdd;
+
+  /// No description provided for @kycDocumentProvided.
+  ///
+  /// In fr, this message translates to:
+  /// **'Document fourni'**
+  String get kycDocumentProvided;
+
+  /// No description provided for @kycDocumentMissing.
+  ///
+  /// In fr, this message translates to:
+  /// **'À fournir'**
+  String get kycDocumentMissing;
+
+  /// No description provided for @kycOptionalLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'· optionnel'**
+  String get kycOptionalLabel;
+
+  /// No description provided for @kycSubmit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soumettre pour vérification'**
+  String get kycSubmit;
+
+  /// No description provided for @kycProcessing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traitement sous 24h ouvrées.'**
+  String get kycProcessing;
+
+  /// No description provided for @kycPrivacy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos documents sont chiffrés et stockés de manière sécurisée. Ils ne sont jamais partagés.'**
+  String get kycPrivacy;
+
+  /// No description provided for @kycPendingHeadline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Documents reçus.'**
+  String get kycPendingHeadline;
+
+  /// No description provided for @kycPendingMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notre équipe vérifie vos documents.\nVous serez notifié sous 24h ouvrées.'**
+  String get kycPendingMessage;
+
+  /// No description provided for @kycPendingCta.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour au profil'**
+  String get kycPendingCta;
+
+  /// No description provided for @kycCancelSubmission.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler la soumission'**
+  String get kycCancelSubmission;
+
+  /// No description provided for @kycProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'AVANCEMENT'**
+  String get kycProgress;
+
+  /// No description provided for @paymentTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement'**
+  String get paymentTitle;
+
+  /// No description provided for @paymentHeadline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos moyens\nde paiement.'**
+  String get paymentHeadline;
+
+  /// No description provided for @paymentPrimary.
+  ///
+  /// In fr, this message translates to:
+  /// **'CARTE PRINCIPALE'**
+  String get paymentPrimary;
+
+  /// No description provided for @paymentSecondary.
+  ///
+  /// In fr, this message translates to:
+  /// **'CARTE SECONDAIRE'**
+  String get paymentSecondary;
+
+  /// No description provided for @paymentHolder.
+  ///
+  /// In fr, this message translates to:
+  /// **'TITULAIRE'**
+  String get paymentHolder;
+
+  /// No description provided for @paymentExpires.
+  ///
+  /// In fr, this message translates to:
+  /// **'EXPIRE'**
+  String get paymentExpires;
+
+  /// No description provided for @paymentAddCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une carte'**
+  String get paymentAddCard;
+
+  /// No description provided for @invoiceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Factures'**
+  String get invoiceTitle;
+
+  /// No description provided for @invoiceHeadline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique.'**
+  String get invoiceHeadline;
+
+  /// No description provided for @invoiceSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos trajets et leurs factures.'**
+  String get invoiceSubtitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
